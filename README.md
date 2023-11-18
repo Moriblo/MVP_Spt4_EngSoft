@@ -4,5 +4,3 @@ MVP da Sprint 4 da Pós Graduação em Engenharia de Software
 * ## Definição do Problema
 * ## Coleta e Análise de Dados
 * ## Pré-processamento
-* ### Limpeza de Dados
-![Limpeza de Dados](https://github.com/Moriblo/MVP_Spt4_EngSoft/blob/main/Screenshot_20231115_200129_Kindle.jpg)
