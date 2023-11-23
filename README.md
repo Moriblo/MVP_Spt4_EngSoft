@@ -5,3 +5,7 @@ MVP da Sprint 4 da Pós Graduação em Engenharia de Software
 * ## Definição do Problema
 * ## Coleta e Análise de Dados
 * ## Pré-processamento
+* ## Modelagem e Inferência
+* ## Pós-processamento
+* ## Apresentação de Resultados
+* ## Implantação do Modelo e Geração de Valor
