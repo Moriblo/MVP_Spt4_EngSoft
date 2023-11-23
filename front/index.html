@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Obras de Arte</title>
+</head>
+
+<body>
+    <!-- Cabeçalho de informações do sistema -->
+    <header>
+        <div class="title">
+            <h2>OBRAS DE ARTE</h2>
+        </div>
+        <div class="banner">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Louvre_Courtyard%2C_Looking_West.jpg/800px-Louvre_Courtyard%2C_Looking_West.jpg"
+                alt="y">
+        </div>
+        
+        <div id="loading-message" class="hidden">Por favor aguarde, processando...</div>
+
+    </header>
+
+    <!-- Opções para adicionar um novo item -->
+    <section class="newItem">       
+        <input type="text" id="newNome" placeholder="Obra:">
+        <input type="text" id="newArtista" placeholder="Artista:">
+        <input type="text" id="newEstilo" placeholder="Estilo:">
+        <input type="text" id="newTipo" placeholder="Tipo:">
+        <input type="text" id="newLink" placeholder="Link:">
+        <span onclick="newItem()" class="addBtn">Adicionar</span>
+    </section>
+
+    <!-- Tabela com items existentes -->
+    <section class="items">
+        <table id="myTable">
+            <tr>
+                <th>Obra</th>
+                <th>Artista</th>
+                <th>Estilo</th>
+                <th>Tipo</th>
+                <th>Link</th>
+                <th><img src="https://cdn-icons-png.flaticon.com/512/126/126468.png" width="15px" height="15px"></th>
+            </tr>
+        </table>
+    </section>
+    <script src="scripts.js"></script>
+</body>
+
+</html>
+
+
