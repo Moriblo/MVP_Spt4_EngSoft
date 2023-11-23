@@ -1,23 +1,20 @@
 /* > SEMÁFORO */
 
-function atualizarSemaforo(criterio) {
+function atualizarSemaforo(R, Y, G) {
   document.getElementById('vermelho').className = 'luz off';
-  document.getElementById('amarelo').className = 'luz on';
+  document.getElementById('amarelo').className = 'luz off';
   document.getElementById('verde').className = 'luz off';
 
-  if (criterio === true) {
-    document.getElementById('verde').className = 'luz on';
-  } else if (criterio === false) {
+  if (R === 'on' && Y === 'off' && G === 'off') {
     document.getElementById('vermelho').className = 'luz on';
-  } else {
+  } 
+  else if (R === 'off' && Y === 'on' && G === 'off') {
     document.getElementById('amarelo').className = 'luz on';
+  } 
+  else if (R === 'off' && Y === 'off' && G === 'on') {
+    document.getElementById('verde').className = 'luz on';
   }
 }
-
-// Exemplo de uso:
-atualizarSemaforo(true);  // Acende a luz verde
-atualizarSemaforo(false); // Acende a luz vermelha
-atualizarSemaforo(null);  // Acende a luz amarela
 
 
 /* > ROTA PARA LISTAR ITENS - /obras/GET

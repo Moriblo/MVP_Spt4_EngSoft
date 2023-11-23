@@ -141,11 +141,12 @@ header {
     cursor: pointer;
     transition: 0.3s;
     border-radius: 2px;
+    margin: 10px; /* adiciona uma margem de 10 pixels ao redor do botão */
 }
 
 .addBtn:hover {
-    background-color: #2ab53a;
-    color: white;
+    background-color: yellow;
+    color: black;
 }
 
 .items {
