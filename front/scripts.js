@@ -139,23 +139,28 @@ const deleteItem = (item) => {
   --------------------------------------------------------------------------------------
 */
 const newItem = async() => {
-  let inputNome = document.getElementById("newNome").value;
-  let inputArtista = document.getElementById("newArtista").value;
-  let inputEstilo = document.getElementById("newEstilo").value;
-  let inputTipo = document.getElementById("newTipo").value;
-  let inputLink = document.getElementById("newLink").value;
-  
+  let inputResgate = document.getElementById("Resgate").value;
+  let inputCaptação = document.getElementById("Captação").value;
+  let inputCotistas = document.getElementById("Cotistas").value;
+  let inputPatLiq = document.getElementById("PatLiq").value;
+  let inputQuota = document.getElementById("Quota").value;
+
+
   // Mostra a MENSAGEM DE PROCESSAMENTO
   const loadingMessage = document.getElementById("loading-message");
   loadingMessage.classList.remove("hidden"); // HTML: "Por favor, aguarde em processamento..."
 
   try{
+    /* Regras de Negócio relacionadas às restrições sobre o modelo de machine learning*/
+    // RN1 :: VL_QUOTA>0
+    // RN2 :: NR_COTST>1.000
+    // RN3 :: VL_PATRIM_LIQ>1.000.000
 
-    // 1ª Regra de Negócio (RN1) - Verifica se há algum campo obrigatório vazio
-    if (inputNome === '' || inputArtista === ''|| inputEstilo === '' || inputTipo === '') {
+    // 1ª Regra de Negócio (RN1, RN2 e RN3)
+    if (inputQuota < 0 && inputCotistas > 1000 && inputPatLiq >{
       // Msg_1
-      alert("A exceção do campo Link que é opcional, todos os demais campos devem estar preenchidos!");
-      return; // Sai da função se houver campos vazios
+      alert(`O valor da Quota tem que ser maior que 0 (zero)!`);
+      return; // Sai da função
     }
     // 2ª Regra de Negócio (RN2) - Verifica se já há registro para mesma Obra e Artista
     const obra_nome = inputNome;
