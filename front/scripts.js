@@ -1,3 +1,25 @@
+/* > SEMÁFORO */
+
+function atualizarSemaforo(criterio) {
+  document.getElementById('vermelho').className = 'luz off';
+  document.getElementById('amarelo').className = 'luz on';
+  document.getElementById('verde').className = 'luz off';
+
+  if (criterio === true) {
+    document.getElementById('verde').className = 'luz on';
+  } else if (criterio === false) {
+    document.getElementById('vermelho').className = 'luz on';
+  } else {
+    document.getElementById('amarelo').className = 'luz on';
+  }
+}
+
+// Exemplo de uso:
+atualizarSemaforo(true);  // Acende a luz verde
+atualizarSemaforo(false); // Acende a luz vermelha
+atualizarSemaforo(null);  // Acende a luz amarela
+
+
 /* > ROTA PARA LISTAR ITENS - /obras/GET
   --------------------------------------------------------------------------------------
   Função para obter a lista existente do servidor via requisição GET pela Rota /obras.

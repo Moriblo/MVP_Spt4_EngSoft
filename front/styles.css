@@ -1,4 +1,41 @@
 /* Classes da página index.html*/
+/* Parâmetros do semáforo*/
+
+.container {
+    display: flex;
+    align-items: center; /* alinha verticalmente */
+    justify-content: space-around; /* espaço entre o semáforo e a seção de entrada de dados */
+}
+
+#semaforo {
+    width: 150px; /* ajuste conforme necessário */
+    height: 50px; /* ajuste conforme necessário */
+    flex-direction: row; /* faz as "lâmpadas" aparecerem na horizontal ou column*/
+    background-color: #333;
+    border-radius: 10px;
+    display: flex; /* garante que as "lâmpadas" sejam dispostas em uma linha */
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+  }
+  
+  .luz {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #111;
+    margin: 0 5px; /* adiciona uma margem horizontal de 5px */
+  }
+  
+  #vermelho.off { background-color: #300; }
+  #amarelo.off { background-color: #330; }
+  #verde.off { background-color: #030; }
+  
+  #vermelho.on { background-color: #f00; }
+  #amarelo.on { background-color: #ff0; }
+  #verde.on { background-color: #0f0; }
+
+ /*Fim dos dados do semáforo*/ 
 
 .hidden {
     display: none;
