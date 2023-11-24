@@ -4,7 +4,7 @@ import os
 
 def setup_logger(service_name):
 
-    log_path = "tradutor/log/"
+    log_path = "log/"
     # Verifica se o diretorio para anexar os logs não existe
     if not os.path.exists(log_path):
         # Então cria o diretorio
@@ -40,7 +40,7 @@ def setup_logger(service_name):
             "error_file": {
                 "class": "logging.handlers.RotatingFileHandler",
                 "formatter": "detailed",
-                "filename": f"tradutor/log/{service_name}.error.log",
+                "filename": f"./{service_name}.error.log",
                 "maxBytes": 10000,
                 "backupCount": 10,
                 "delay": "True",
@@ -48,7 +48,7 @@ def setup_logger(service_name):
             "detailed_file": {
                 "class": "logging.handlers.RotatingFileHandler",
                 "formatter": "detailed",
-                "filename": f"tradutor/log/{service_name}.detailed.log",
+                "filename": f"./{service_name}.detailed.log",
                 "maxBytes": 10000,
                 "backupCount": 10,
                 "delay": "True",

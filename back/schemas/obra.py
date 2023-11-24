@@ -74,3 +74,12 @@ def apresenta_obra(obra: Obra):
         "tipo": obra.tipo,
         "link": obra.link,        
     }
+
+class AvalFIMultSchema(BaseModel):
+    """ Define como deve ser a estrutura do dado retornado após uma requisição
+        de remoção.
+    """
+    entrada: str
+    mesage: str
+    saída: str
+    # artista: str

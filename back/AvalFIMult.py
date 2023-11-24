@@ -2,16 +2,15 @@
 """ 1 - Carga Inicial.
 """
 # =============================================================================
-from googletrans import Translator
+import os, sys, json
+import pickle
 
 from flask_openapi3 import OpenAPI, Info, Tag
 from flask_cors import CORS
 from flask import redirect, request, Flask, jsonify, make_response
 
-from schemas import *
+from schemas import AvalFIMultSchema
 from urllib.parse import unquote
-
-import os, sys, json
 
 from logger import setup_logger
 
@@ -19,18 +18,18 @@ from logger import setup_logger
 """ 2 - Inicializa variáveis de Informações gerais de identificação do serviço.
 """
 #  ==============================================================================
-info = Info(title="API Tradutor", version="1.0.0")
+info = Info(title="API AvalFIMult", version="1.0.0")
 app = OpenAPI(__name__, info=info)
 
 home_tag = Tag(name="Documentação", description="Apresentação da documentação via Swagger.")
-obra_tag = Tag(name="Rota em tradutor", description="Realiza tradução do português para o inglês")
-doc_tag = Tag(name="Rota em tradutor", description="Documentação da API tradutor no github")
+obra_tag = Tag(name="Rota em AvalFIMult", description="Avaliação de Viabilidade de Investimento em Fundos Multimercado")
+doc_tag = Tag(name="Rota em AvalFIMult", description="Documentação da API tradutor no github")
 
 # ==============================================================================
 """ 3 - Inicializa "service_name" para fins de geração de arquivo de log.
 """
 # ==============================================================================
-service_name = "tradutor"
+service_name = "AvalFIMult"
 logger = setup_logger(service_name)
 
 # ==============================================================================
@@ -66,44 +65,48 @@ def home():
 def doc():
     """Redireciona para documentação no github.
     """
-    return redirect('https://github.com/Moriblo/tradutor')
+    return redirect('https://github.com/Moriblo/PUC_EngSoft_MVP4')
 
 # ==============================================================================++
-""" 6 - Rota "/tradutor" para tratar o fetch de `GET`.
+""" 6 - Rota "/AvalFIMult" para tratar o fetch de `GET`.
 """
 # ==============================================================================++
-@app.get('/tradutor', methods=['GET'], tags=[obra_tag],
-            responses={"200": TradutorSchema})
+@app.get('/AvalFIMult', tags=[obra_tag])
 
-def get_tradutor(query: ObraBuscaSchema):
-    """Traduz do português para o inglês.
+def aval_fi_mult():
+    """Avaliação de Viabilidade de Investimento em Fundos Multimercado.
     """
+    # Lê os valores
+    resgate = request.args.get('resgate')
+    capta = request.args.get('capta')
+    cotistas = request.args.get('cotistas')
+    patliq = request.args.get('patliq')
+    quota = request.args.get('quota')
 
     # Lê identificação da origem da solicitação de uso desta API
     origin = request.headers.get('X-Origin')
-    
-    # Lê o valor do parâmetro de consulta 'entrada' da solicitação
-    entrada = request.args.get('entrada')
 
     # Verifica se o parâmetro 'entrada' foi fornecido
-    if not entrada:
-        mesage = "Erro: nenhum texto fornecido para tradução"
+    if not resgate or not capta or not cotistas or not patliq or not quota:
+        mesage = "Erro: Todos os dados devem ser fornecidos!"
         return mesage
     else:
-        # Traduz o texto para o inglês
-        translator = Translator(service_urls=['translate.google.com'])
-        translation = translator.translate(entrada, src='pt', dest='en')
-        print(f"Em portugês: {entrada} em inglês: {translation.text}")
-        print(f"Origin: {origin}")
-        translation.json = json.dumps(translation.text)
-        
-        # Retorna o conteúdo traduzido e mensagem de confirmação
-        logger.debug(f"Tradução realizada de {entrada} para {translation.json}")
-        mesage ="Tradução realizada"
-        translation.json = translation.json.replace('"', '')
-        return jsonify(entrada, mesage, translation.json)
+        if not origin:
+            mesage = "Erro: Sem identificação da origem da chamada!"
+            return mesage
 
-        pass
+        path = "C:\\venv\\.__Projetos\\PUC_EngSoft_MVP4\\modelos_ML\\"
+        modelo_pkl = "Modelo_FI_Multi.pkl"
+        with open(path + modelo_pkl, "rb") as f:
+            model = pickle.load(f)
+
+        # Fazer a avaliação para o fundo de investimento com o modelo
+        sugest = model.predict([[resgate, capta, cotistas, patliq, quota]])
+
+        # Retornar com SUGESTÃO (Viável ou Inviável) para a aplicação no fundo de investimento
+        return sugest
+
+
 
 # ===============================================================================
 """ 7 - Garante a disponibilidade da API em "suspenso".
