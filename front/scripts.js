@@ -40,28 +40,35 @@ const newItem = async() => {
   loadingMessage.classList.remove("hidden"); // HTML: "Por favor, aguarde em processamento..."
 
   try{
+
     /* Verifica se todas as entradas estão preenchidas */
     if (inputResgate === '' || inputCaptação === ''|| inputCotistas === '' || inputPatLiq === '' || inputQuota === '') {
-      // Msg_1
-      alert("Erro: Todos os campos devem estar preenchidos!");
-      return; // Sai da função se houver campos vazios
-    }
+      atualizarSemaforo ('off', 'on', 'off');
+      setTimeout(() => {
+        alert("Erro: Todos os campos devem estar preenchidos!");
+        atualizarSemaforo ('off', 'off', 'off');
+      }, 100);
+      return;
+    }    
 
     /* Regras de Negócio relacionadas às restrições sobre o modelo de machine learning*/
     // RN1 :: VL_QUOTA>0
-    // RN2 :: NR_COTST>1.000
-    // RN3 :: VL_PATRIM_LIQ>1.000.000
+    // RN2 :: NR_COTST>=1.000
+    // RN3 :: VL_PATRIM_LIQ>=1.000.000
     // Regras de Negócio: RN1, RN2 e RN3
     if (inputQuota < 0 || inputCotistas < 1000 || inputPatLiq < 1000000) {
       // Msg_2
-      alert(`Erro: O valor da Quota tem que ser > 0 (zero), Número de Cotistas >= 1.000 e Valor do Patrimônio Líquido >= 1.000.000 !`);
+      atualizarSemaforo ('off', 'on', 'off');
+      setTimeout(() => {
+        alert("Erro: Observar as restrições: Quota>=0, Cotistas>=1.000 e Patrimônio>=1.000.000!");
+        atualizarSemaforo ('off', 'off', 'off');
+      }, 100);
       return; // Sai da função
     }
 
-    // NÃO ESTÁ CHAMANDO A FUNÇÃO AvalFIMult
-    atualizarSemaforo ('off', 'on', 'off')
     AvalFIMult(inputResgate, inputCaptação, inputCotistas, inputPatLiq, inputQuota);
     atualizarSemaforo (R, Y, G)
+
   }
   
   finally {
@@ -78,11 +85,9 @@ const newItem = async() => {
 */
 
  AvalFIMult = async (inputResgate, inputCaptação, inputCotistas, inputPatLiq, inputQuota) => {
-  alert("Realizando avaliação...");
+
   try {
-    const url = `http://127.0.0.1:5001/AvalFIMult?resgate=${inputResgate}&
-    capta=${inputCaptação}&cotistas=${inputCotistas}&patliq=${inputPatLiq}&
-    quota=${inputQuota}`;
+    const url = `http://127.0.0.1:5001/AvalFIMult?resgate=${inputResgate}&capta=${inputCaptação}&cotistas=${inputCotistas}&patliq=${inputPatLiq}&quota=${inputQuota}`;
 
     const response = await fetch(url, {
       method: 'get', headers: {

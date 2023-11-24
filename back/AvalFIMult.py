@@ -73,7 +73,7 @@ def doc():
 # ==============================================================================++
 @app.get('/AvalFIMult', tags=[obra_tag])
 
-def aval_fi_mult():
+def AvalFIMult():
     """Avaliação de Viabilidade de Investimento em Fundos Multimercado.
     """
     # Lê os valores
@@ -88,11 +88,14 @@ def aval_fi_mult():
 
     # Verifica se o parâmetro 'entrada' foi fornecido
     if not resgate or not capta or not cotistas or not patliq or not quota:
-        mesage = "Erro: Todos os dados devem ser fornecidos!"
+        mesage = f"{resgate},{capta},{cotistas},{patliq},{quota}"
+        # mesage = "Erro: Todos os dados devem ser fornecidos!"
+        print(mesage)
         return mesage
     else:
         if not origin:
             mesage = "Erro: Sem identificação da origem da chamada!"
+            print(mesage)
             return mesage
 
         path = "C:\\venv\\.__Projetos\\PUC_EngSoft_MVP4\\modelos_ML\\"
