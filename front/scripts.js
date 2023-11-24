@@ -4,28 +4,31 @@
   --------------------------------------------------------------------------------------
 */
 
-function atualizarSemaforo(R, Y, G) {
-  document.getElementById('vermelho').className = 'luz off';
-  document.getElementById('amarelo').className = 'luz off';
-  document.getElementById('verde').className = 'luz off';
-
-  if (R === 'on' && Y === 'off' && G === 'off') {
-    document.getElementById('vermelho').className = 'luz on';
-  } 
-  else if (R === 'off' && Y === 'on' && G === 'off') {
-    document.getElementById('amarelo').className = 'luz on';
-  } 
-  else if (R === 'off' && Y === 'off' && G === 'on') {
-    document.getElementById('verde').className = 'luz on';
+// function atualizarSemaforo(R, Y, G) {
+const atualizarSemaforo = (R, Y, G, result) => {
+    document.getElementById('vermelho').className = 'luz off';
+    document.getElementById('amarelo').className = 'luz off';
+    document.getElementById('verde').className = 'luz off';
+    if (R === 'on' && Y === 'off' && G === 'off') {
+      document.getElementById('vermelho').className = 'luz on';
+    } 
+    else if (R === 'off' && Y === 'on' && G === 'off') {
+      document.getElementById('amarelo').className = 'luz on';
+    } 
+    else if (R === 'off' && Y === 'off' && G === 'on') {
+      document.getElementById('verde').className = 'luz on';
+    }
   }
-}
+  
 
 /* Coleta os dados
   --------------------------------------------------------------------------------------
   Função para coletar os dados inseridos e chamar a API de ML para avaliar os dados 
   --------------------------------------------------------------------------------------
 */
+
 const newItem = async() => {
+
   let inputResgate = document.getElementById("Resgate").value;
   let inputCaptação = document.getElementById("Captação").value;
   let inputCotistas = document.getElementById("Cotistas").value;
@@ -56,9 +59,9 @@ const newItem = async() => {
     }
 
     // NÃO ESTÁ CHAMANDO A FUNÇÃO AvalFIMult
+    atualizarSemaforo ('off', 'on', 'off')
     AvalFIMult(inputResgate, inputCaptação, inputCotistas, inputPatLiq, inputQuota);
-    atualizarSemaforo(R, Y, G)
-
+    atualizarSemaforo (R, Y, G)
   }
   
   finally {
@@ -68,18 +71,17 @@ const newItem = async() => {
 
 }
 
-
 /* Chama API AvalFIMult
   --------------------------------------------------------------------------------------
   Chama API para Avaliação de Viabilidade de Investimento em Fundos Multimercado  
   --------------------------------------------------------------------------------------
 */
 
-const AvalFIMult = async (inputResgate, inputCaptacao, inputCotistas, inputPatLiq, inputQuota) => {
-  alert(inputResgate + "," + inputCaptação + "," + inputCotistas + "," + inputPatLiq + "," + "," + inputQuota);
+ AvalFIMult = async (inputResgate, inputCaptação, inputCotistas, inputPatLiq, inputQuota) => {
+  alert("Realizando avaliação...");
   try {
     const url = `http://127.0.0.1:5001/AvalFIMult?resgate=${inputResgate}&
-    capta=${inputCaptacao}&cotistas=${inputCotistas}&patliq=${inputPatLiq}&
+    capta=${inputCaptação}&cotistas=${inputCotistas}&patliq=${inputPatLiq}&
     quota=${inputQuota}`;
 
     const response = await fetch(url, {
