@@ -3,9 +3,13 @@
   Função para mostrar o resultado da avaliação dos dados do fundo 
   --------------------------------------------------------------------------------------
 */
+let R = 'off'
+let Y = 'off'
+let G = 'off'
 
 // function atualizarSemaforo(R, Y, G) {
 const atualizarSemaforo = (R, Y, G, result) => {
+
     document.getElementById('vermelho').className = 'luz off';
     document.getElementById('amarelo').className = 'luz off';
     document.getElementById('verde').className = 'luz off';
@@ -92,7 +96,7 @@ const newItem = async() => {
     const response = await fetch(url, {
       method: 'get', headers: {
         'Content-Type': 'application/json',
-        'X-Origin': 'Obras de Arte'
+        'X-Origin': 'FIMulti'
       }
     });
 
@@ -100,7 +104,8 @@ const newItem = async() => {
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
-    } else {
+    } 
+    else {
       const data = await response.text();
       if (data === '1') {
         R = "off";
@@ -111,9 +116,11 @@ const newItem = async() => {
         Y = "off";
         G = "off";
       }
-      return {R, Y, G};
+      atualizarSemaforo(R, Y, G)
+      // return {R, Y, G};
     }
-  } catch (error) {
-    console.log(error);
+  } 
+  catch (error) {
+  console.log(error);
   }
 }

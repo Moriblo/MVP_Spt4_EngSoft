@@ -119,6 +119,7 @@ def AvalFIMult():
         sugest_str = str(sugest[0])
 
         # Retornar com SUGESTÃO (Viável ou Inviável) para a aplicação no fundo de investimento
+        print(origin)
         print("A avaliação quanto aos dados do FI é:" + sugest_str)
         return sugest_str
 
