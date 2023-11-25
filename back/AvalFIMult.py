@@ -98,17 +98,29 @@ def AvalFIMult():
             print(mesage)
             return mesage
 
-        path = "C:\\venv\\.__Projetos\\PUC_EngSoft_MVP4\\modelos_ML\\"
-        modelo_pkl = "Modelo_FI_Multi.pkl"
-        with open(path + modelo_pkl, "rb") as f:
+        path_pkl = "../modelos_ML/"
+        modelo_pkl = "FIMulti_SVM_V1.pkl"
+        pathmodel = path_pkl + modelo_pkl
+        with open(pathmodel, "rb") as f:
             model = pickle.load(f)
+
+        
+        # Tratando as variáveis para adequar ao que o modelo espera
+        resgate = float(resgate)
+        capta = float(capta)
+        cotistas = float(cotistas)
+        patliq = float(patliq)
+        quota = float(quota)
 
         # Fazer a avaliação para o fundo de investimento com o modelo
         sugest = model.predict([[resgate, capta, cotistas, patliq, quota]])
 
-        # Retornar com SUGESTÃO (Viável ou Inviável) para a aplicação no fundo de investimento
-        return sugest
+        # Converter a sugestão em uma string
+        sugest_str = str(sugest[0])
 
+        # Retornar com SUGESTÃO (Viável ou Inviável) para a aplicação no fundo de investimento
+        print("A avaliação quanto aos dados do FI é:" + sugest_str)
+        return sugest_str
 
 
 # ===============================================================================
