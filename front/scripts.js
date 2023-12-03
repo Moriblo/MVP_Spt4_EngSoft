@@ -34,52 +34,64 @@ const atualizarSemaforo = (R, Y, G, result) => {
 const newItem = async() => {
 
   let inputResgate = document.getElementById("Resgate").value;
-  let inputCaptação = document.getElementById("Captação").value;
-  let inputCotistas = document.getElementById("Cotistas").value;
+  let inputCapta = document.getElementById("Captação").value;
   let inputPatLiq = document.getElementById("PatLiq").value;
-  let inputQuota = document.getElementById("Quota").value;
+  let inputPatTotal = document.getElementById("PatTotal").value;
   
-  // Mostra a MENSAGEM DE PROCESSAMENTO
-  const loadingMessage = document.getElementById("loading-message");
-  loadingMessage.classList.remove("hidden"); // HTML: "Por favor, aguarde em processamento..."
-
   try{
 
     /* Verifica se todas as entradas estão preenchidas */
-    if (inputResgate === '' || inputCaptação === ''|| inputCotistas === '' || inputPatLiq === '' || inputQuota === '') {
+    if (inputResgate === '' || inputCapta === ''|| inputPatLiq === '' || inputPatTotal === '') {
       atualizarSemaforo ('off', 'on', 'off');
       setTimeout(() => {
         alert("Erro: Todos os campos devem estar preenchidos!");
         atualizarSemaforo ('off', 'off', 'off');
+        letreiro()
       }, 100);
       return;
-    }    
+    }
+
+    // Trata os dados de entrada
+    inputResgate = inputResgate.replace(/\s+/g, ''); // remove todos os espaços
+    inputResgate = parseFloat(inputResgate)
+    console.log(inputResgate);
+    console.log(typeof inputResgate)
+
+    inputCapta = inputCapta.replace(/\s+/g, ''); // remove todos os espaços
+    inputCapta = parseFloat(inputCapta)
+    console.log(inputCapta);
+    console.log(typeof inputCapta)
+
+    inputPatLiq = inputPatLiq.replace(/\s+/g, ''); // remove todos os espaços
+    inputPatLiq = parseFloat(inputPatLiq)
+    console.log(inputPatLiq);
+    console.log(typeof inputPatLiq)
+
+    inputPatTotal = inputPatTotal.replace(/\s+/g, ''); // remove todos os espaços
+    inputPatTotal = parseFloat(inputPatTotal)
+    console.log(inputPatTotal);
+    console.log(typeof inputPatTotal)
 
     /* Regras de Negócio relacionadas às restrições sobre o modelo de machine learning*/
-    // RN1 :: VL_QUOTA>0
-    // RN2 :: NR_COTST>=1.000
-    // RN3 :: VL_PATRIM_LIQ>=1.000.000
-    // Regras de Negócio: RN1, RN2 e RN3
-    if (inputQuota < 0 || inputCotistas < 1000 || inputPatLiq < 1000000) {
+    // Regra de Negócio: VL_PATRIM_LIQ>=1.000.000
+    if (inputPatLiq < 1000000) {
       // Msg_2
       atualizarSemaforo ('off', 'on', 'off');
       setTimeout(() => {
-        alert("Erro: Observar as restrições: Quota>=0, Cotistas>=1.000 e Patrimônio>=1.000.000!");
+        alert("Erro: Patrimônio>=1.000.000!");
         atualizarSemaforo ('off', 'off', 'off');
+        letreiro()
       }, 100);
       return; // Sai da função
     }
 
-    AvalFIMult(inputResgate, inputCaptação, inputCotistas, inputPatLiq, inputQuota);
+    avalfimult(inputResgate, inputCapta, inputPatLiq, inputPatTotal);
+    letreiro("Processando...")
     atualizarSemaforo (R, Y, G)
 
   }
   
-  finally {
-    // Esconde a MENSAGEM DE PROCESSAMENTO
-    loadingMessage.classList.add("hidden");
-  }
-
+  finally {}
 }
 
 /* Chama API AvalFIMult
@@ -88,10 +100,10 @@ const newItem = async() => {
   --------------------------------------------------------------------------------------
 */
 
- AvalFIMult = async (inputResgate, inputCaptação, inputCotistas, inputPatLiq, inputQuota) => {
+avalfimult = async (inputResgate, inputCapta, inputPatLiq, inputPatTotal) => {
 
   try {
-    const url = `http://127.0.0.1:5001/AvalFIMult?resgate=${inputResgate}&capta=${inputCaptação}&cotistas=${inputCotistas}&patliq=${inputPatLiq}&quota=${inputQuota}`;
+    const url = `http://127.0.0.1:5001/avalfimult?resgate=${inputResgate}&capta=${inputCapta}&patliq=${inputPatLiq}&pattotal=${inputPatTotal}`;
 
     const response = await fetch(url, {
       method: 'get', headers: {
@@ -107,14 +119,22 @@ const newItem = async() => {
     } 
     else {
       const data = await response.text();
-      if (data === '1') {
+      if (data === "1") {
         R = "off";
         Y = "off";
         G = "on";
-      } else {
+        letreiro("Tá liberado!!!")
+      } else if (data === "0") {
         R = "on";
         Y = "off";
         G = "off";
+        letreiro("Deu ruim!!!")
+      }
+      else {
+        R = "off";
+        Y = "on";
+        G = "off";
+        letreiro("ERRO DE PROCESSAMENTO!!!")
       }
       atualizarSemaforo(R, Y, G)
       // return {R, Y, G};
@@ -123,4 +143,17 @@ const newItem = async() => {
   catch (error) {
   console.log(error);
   }
+}
+
+/* SEMÁFORO
+  --------------------------------------------------------------------------------------
+  Função para mostrar o resultado da avaliação dos dados do fundo 
+  --------------------------------------------------------------------------------------
+*/
+function letreiro(newText) {
+  // Seleciona o elemento marquee
+  var marquee = document.querySelector('.letreiro marquee');
+
+  // Altera o texto dentro do marquee
+  marquee.textContent = newText;
 }
