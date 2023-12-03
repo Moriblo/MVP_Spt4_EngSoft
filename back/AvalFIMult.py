@@ -130,14 +130,15 @@ def avalfimult():
             resultado = "Inviável"
         elif sugest_str == "1":
             resultado = "Viável"
-        mesage = "O resultado obtido foi:" + resultado
+        mesage = "O resultado obtido foi: " + resultado
 
         # Retornar com SUGESTÃO (Viável ou Inviável) para a aplicação no fundo de investimento
-        print("Valores recebidos:", "resgate:", resgate, "captação:", capta, \
+        print("Modelo utilizado: " + str(model))
+        print("Formatação utilizada: " + str(scaler))
+        print("Valores recebidos: ", "resgate:", resgate, "captação:", capta, \
             "Patrim. Liq.:", patliq, "Patrim. Total:", pattotal)
-        # print("Valores convertidos:", entrada[0], entrada[1], entrada[2], entrada[3])
-        print(mesage)
-        print(sugest)
+        print("Valores convertidos: ", entrada)
+        print(mesage + " " + sugest_str)
         return sugest_str
 
 
