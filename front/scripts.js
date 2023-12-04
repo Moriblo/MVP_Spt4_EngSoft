@@ -78,7 +78,7 @@ const newItem = async() => {
       // Msg_2
       atualizarSemaforo ('off', 'on', 'off');
       setTimeout(() => {
-        alert("Erro: Patrimônio>=1.000.000!");
+        alert("Erro: Patrimônio deve ser >= 1.000.000!");
         atualizarSemaforo ('off', 'off', 'off');
         letreiro()
       }, 100);

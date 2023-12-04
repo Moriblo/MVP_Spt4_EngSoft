@@ -102,7 +102,9 @@ def avalfimult():
             # mesage = "Erro: Sem identificação da origem da chamada!"
             # print(mesage)
             # return mesage
-
+        if patliq < 1000000:
+            mesage = "Erro: patliq deve ser >= 1M !!!"
+            return mesage
         path_pkl = "../modelos_ML/"
         modelo_pkl = "Pkl_Model_FIMulti_CART.pkl"
         scaler_pkl = "Pkl_Scaler_Standard.pkl"
