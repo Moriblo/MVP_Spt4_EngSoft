@@ -12,7 +12,6 @@ from flask_openapi3 import OpenAPI, Info, Tag
 from flask_cors import CORS
 from flask import redirect, request, Flask, jsonify, make_response
 
-from schemas import AvalFIMultSchema
 from urllib.parse import unquote
 
 from logger import setup_logger
