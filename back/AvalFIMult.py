@@ -81,29 +81,39 @@ def doc():
 def avalfimult():
     """Avaliação de Viabilidade de Investimento em Fundos Multimercado.
     """
-    
-    # Lê os valores
-    resgate = float(request.args.get('resgate'))
-    capta = float(request.args.get('capta'))
-    patliq = float(request.args.get('patliq'))
-    pattotal = float(request.args.get('pattotal'))
+    resgate = request.args.get('resgate')
+    capta = request.args.get('capta')
+    patliq = request.args.get('patliq')
+    pattotal = request.args.get('pattotal')
+
+    if not all(arg is not None and arg.replace('.', '', 1).isdigit() \
+        for arg in [resgate, capta, patliq, pattotal]):
+        message = "Os argumentos 'resgate', 'capta', 'patliq' e 'pattotal' \
+            recebidos ou estão vazios ou não são números."
+        return message, 400
 
     # Lê identificação da origem da solicitação de uso desta API
     # origin = request.headers.get('X-Origin')
 
     # Verifica se o parâmetro 'entrada' foi fornecido
     if resgate is None or capta is None or patliq is None or pattotal is None:
-        mesage = f"Erro: Parâmetros incompletos - resgate: {resgate}, capta: {capta}, \
+        message = f"Erro: Parâmetros incompletos - resgate: {resgate}, capta: {capta}, \
             patliq: {patliq}, pattotal: {pattotal}"
-        return mesage
+        return message
     else:
         # if not origin:
-            # mesage = "Erro: Sem identificação da origem da chamada!"
-            # print(mesage)
-            # return mesage
+            # message = "Erro: Sem identificação da origem da chamada!"
+            # print(message)
+            # return message
+
+        resgate = float(resgate)
+        capta = float(capta)
+        patliq = float(patliq)
+        pattotal = float(pattotal)
+
         if patliq < 1000000:
-            mesage = "Erro: patliq deve ser >= 1M !!!"
-            return mesage
+            message = "Erro: patliq deve ser >= 1M !!!"
+            return message
         path_pkl = "../modelos_ML/"
         modelo_pkl = "Pkl_Model_FIMulti_CART.pkl"
         scaler_pkl = "Pkl_Scaler_Standard.pkl"
@@ -125,13 +135,13 @@ def avalfimult():
         # Converter o resultado (sugestão) em uma string
         sugest_str = str(sugest[0])
         if sugest_str != "0" and sugest_str != "1":
-            mesage = "Erro: Nenhum resultado foi obtido!!!" + sugest_str
-            return mesage
+            message = "Erro: Nenhum resultado foi obtido!!!" + sugest_str
+            return message
         elif sugest_str == "0":
             resultado = "Inviável"
         elif sugest_str == "1":
             resultado = "Viável"
-        mesage = "O resultado obtido foi: " + resultado
+        message = "O resultado obtido foi: " + resultado
 
         # Retornar com SUGESTÃO (Viável ou Inviável) para a aplicação no fundo de investimento
         print("Modelo utilizado: " + str(model))
@@ -139,7 +149,7 @@ def avalfimult():
         print("Valores recebidos: ", "resgate:", resgate, "captação:", capta, \
             "Patrim. Liq.:", patliq, "Patrim. Total:", pattotal)
         print("Valores convertidos: ", entrada)
-        print(mesage + " " + sugest_str)
+        print(message + " " + sugest_str)
         return sugest_str
 
 

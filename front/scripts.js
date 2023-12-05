@@ -8,7 +8,7 @@ let Y = 'off'
 let G = 'off'
 
 // function atualizarSemaforo(R, Y, G) {
-const atualizarSemaforo = (R, Y, G, result) => {
+const atualizarSemaforo = (R, Y, G) => {
 
     document.getElementById('vermelho').className = 'luz off';
     document.getElementById('amarelo').className = 'luz off';
@@ -86,8 +86,6 @@ const newItem = async() => {
     }
 
     avalfimult(inputResgate, inputCapta, inputPatLiq, inputPatTotal);
-    letreiro("Processando...")
-    atualizarSemaforo (R, Y, G)
 
   }
   
@@ -101,6 +99,8 @@ const newItem = async() => {
 */
 
 avalfimult = async (inputResgate, inputCapta, inputPatLiq, inputPatTotal) => {
+  
+  let R, Y, G;
 
   try {
     const url = `http://127.0.0.1:5001/avalfimult?resgate=${inputResgate}&capta=${inputCapta}&patliq=${inputPatLiq}&pattotal=${inputPatTotal}`;
@@ -112,11 +112,13 @@ avalfimult = async (inputResgate, inputCapta, inputPatLiq, inputPatTotal) => {
       }
     });
 
-    let R, Y, G;
-
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    } 
+      response.text().then((text) => {
+        alert("Erro na API: " + text);
+        atualizarSemaforo('off', 'on', 'off');
+        letreiro(response.statusText)
+      })
+    }
     else {
       const data = await response.text();
       if (data === "1") {
@@ -124,27 +126,25 @@ avalfimult = async (inputResgate, inputCapta, inputPatLiq, inputPatTotal) => {
         Y = "off";
         G = "on";
         newText ="Com acurácia de ~70% e precisão de ~80%, este fundo É VIÁVEL."
-        letreiro(newText)
       } else if (data === "0") {
         R = "on";
         Y = "off";
         G = "off";
         newText = "Com acurácia de ~70% e precisão de ~10%, este fundo É INVIÁVEL"
-        letreiro(newText)
       }
       else {
         R = "off";
         Y = "on";
         G = "off";
-        letreiro("ERRO DE PROCESSAMENTO!!!")
+        newText = "ERRO DE PROCESSAMENTO!!!"
       }
       atualizarSemaforo(R, Y, G)
-      // return {R, Y, G};
     }
   } 
   catch (error) {
-  console.log(error);
+  console.log(error); newText = error;
   }
+  letreiro(newText)
 }
 
 /*  LETREIRO
