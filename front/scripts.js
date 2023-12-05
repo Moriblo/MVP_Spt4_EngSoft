@@ -123,12 +123,14 @@ avalfimult = async (inputResgate, inputCapta, inputPatLiq, inputPatTotal) => {
         R = "off";
         Y = "off";
         G = "on";
-        letreiro("Tá liberado!!!")
+        newText ="A partir dos dados de entrada, e considerando 70% de precisão, este fundo É VIÁVEL."
+        letreiro(newText)
       } else if (data === "0") {
         R = "on";
         Y = "off";
         G = "off";
-        letreiro("Deu ruim!!!")
+        newText = "A partir dos dados de entrada, e considerando 60% de precisão, este fundo É INVIÁVEL"
+        letreiro(newText)
       }
       else {
         R = "off";
@@ -145,9 +147,9 @@ avalfimult = async (inputResgate, inputCapta, inputPatLiq, inputPatTotal) => {
   }
 }
 
-/* SEMÁFORO
+/*  LETREIRO
   --------------------------------------------------------------------------------------
-  Função para mostrar o resultado da avaliação dos dados do fundo 
+  Função para emitir informações ao usuário 
   --------------------------------------------------------------------------------------
 */
 function letreiro(newText) {
