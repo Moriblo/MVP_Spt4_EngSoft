@@ -9,8 +9,8 @@ MVP da Sprint 4 da Pós Graduação em Engenharia de Software
 * ## Coleta e Análise de Dados
   São utilizados dados diários dos fundos cadastrados na Comissão de Valores Mobiliários (CVM). _Por conta dos tamanhos das bases utilizadas (dois meses com dados de performance diária para o treinamento do modelo, dois outros meses para a geração do golden data, e mais a base de cadastro dos fundos), não foi possível a manipulação destas no github, **utilizando-se do google drive. O diretório está compartilhado para "qualquer pessoa com o link"**_.
 
-:link: Fonte dos dados: https://dados.cvm.gov.br/dataset/fi-doc-inf_diario <br>
-:link: Link do google drive: https://drive.google.com/drive/folders/1bBSueloNniaey8LpJzwfipWTuS1sn9LR?usp=sharing
+🔗 Fonte dos dados: https://dados.cvm.gov.br/dataset/fi-doc-inf_diario <br>
+🔗 Link do google drive: https://drive.google.com/drive/folders/1bBSueloNniaey8LpJzwfipWTuS1sn9LR?usp=sharing
 
 * ## Pré-processamento
 * ## Modelagem e Inferência
