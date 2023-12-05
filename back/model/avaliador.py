@@ -30,5 +30,6 @@ class Avaliador:
         precisao, recall, fscore, suporte = precision_recall_fscore_support(carga_saida, SUGESTÃO_CALC)
 
         precisao_1 = precisao[1]
+        precisao_0 = precisao[0]
 
-        return acuracia, precisao_1
+        return acuracia, precisao_1, precisao_0

@@ -39,7 +39,7 @@ def test_modelo_cart():
     expected_params = {'max_depth': 15, 'min_samples_leaf': 2, 'min_samples_split': 5}
 
     # Obtendo os resultados da aplicação do modelo
-    acuracia_cart, precisao_cart = avaliador.avaliar(dataset, qtde_lines, atributos, \
+    acuracia_cart, precisao_cart_1, precisao_cart_0 = avaliador.avaliar(dataset, qtde_lines, atributos, \
         modelo_cart, scaler_cart)
 
     """
@@ -55,9 +55,11 @@ def test_modelo_cart():
 
     """
     O objetivo foi balancear os resultados de acurácia com o de precisão, considerando a precisão 
-    como mais crítica. Entende-se que, apontar um falso positivo para a viabilidade de um 
-    investimento, é mais crítico do que inviabilizar um investimento. Ou seja, um falso positivo 
-    pode levar a comprometimento de recurso financeiro.
+    para a classe 1 como mais crítica. Entende-se que, apontar um falso positivo para a viabilidade 
+    de um investimento, é mais crítico do que inviabilizar um investimento. Ou seja, um falso 
+    positivo pode levar a comprometimento de recurso financeiro.
     """
-    assert acuracia_cart >= 0.6
-    assert precisao_cart >= 0.8, "Índice crítico para minimizar o risco de erro no investimento"
+    assert acuracia_cart >= 0.7, "Índice de acurácia abaixo do limiar"
+    assert precisao_cart_1 >= 0.8, "Índice para classe 1, crítico para heurística de negócio,\
+         abaixo do limiar"
+    assert precisao_cart_0 >= 0.1, "Índice para classe 0 abaixo do limiar"
