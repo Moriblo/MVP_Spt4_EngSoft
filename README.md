@@ -26,7 +26,7 @@ MVP da Sprint 4 da Pós Graduação em Engenharia de Software
 
   ***Feature Selection and Engineering:***
   
-  ATRIBUTO ALVO:: RET_VL_QUOTA = VL_QUOTA (M+1) - VL_QUOTA (M). Se RET_VL_QUOTA > 0, SUGESTÃO = 1, investimento VIÁVEL, caso contrário SUGESTÃO = 0, INVIÁVEL. O atributo alvo será o campo [SUGESTÃO].
+  ATRIBUTO ALVO:: RET_VL_QUOTA = VL_QUOTA (M+1) - VL_QUOTA (M). Se RET_VL_QUOTA > 0, SUGESTÃO = 1, investimento VIÁVEL, caso contrário SUGESTÃO = 0, INVIÁVEL. O atributo alvo é o campo [SUGESTÃO].
 
   FEATURES:: Foram pré-selecionadas 7 (sete) colunas das 10 (dez) originais.
 
