@@ -30,9 +30,16 @@ MVP da Sprint 4 da Pós Graduação em Engenharia de Software
 
   FEATURES:: Foram pré-selecionadas 7 (sete) colunas das 10 (dez) originais.
 
-  ***OBS*** - Foram utilizados os meses 9/23 e 10/23 para geração das bases de treino e teste. Foram utilizados os meses 7/23 e 8/23 para geração da base de simulação.
+  ***OBS*** - Foram utilizados os meses 9/23 e 10/23 para geração das bases de treino e teste. Foram utilizados os meses 7/23 e 8/23 para geração da base de simulação (golden data).
 
 * ## Modelagem e Inferência
+  Aplicou-se o Método de Seleção de Atributos, considerando a quantidade de 4 (quatro) atributos a partir da avaliação dos mapas de calor de correlação Avaliou-se, a partir do score de precisão, a Linha Base, Normalização e Padronização, e com os modelos de melhor performance, selecionou-se os que passaram ao tuning. Utilizando o grid search para busca das melhores combinações de parâmetros por modelo, chegou-se ao modelo final. Esta última etapa foi feita modelo a modelo, por conta do tempo de processamento para realização de modelos mais complexos.
+  
 * ## Pós-processamento
+  O objetivo foi balancear os resultados de acurácia com o de precisão, ***considerando a precisão para a classe 1 como mais crítica***. _Entende-se que, apontar um falso positivo para a viabilidade de um investimento, é mais crítico do que inviabilizar um investimento. Ou seja, um falso positivo para a classe 1, pode levar a comprometimento de recurso financeiro._
+  
 * ## Apresentação de Resultados
+  Foi gerado um dataframe (df_simula) com dados para simulação, e utilizados samples randomicos para verificar a performance da acurácia e precisão pelo classification report.
+  
 * ## Implantação do Modelo e Geração de Valor
+  Exporta para 'My Drive' no Google Drive,  um arquivo .pkl com o modelo utilizado e um outro arquivo, que tem o scaler utilizado.
