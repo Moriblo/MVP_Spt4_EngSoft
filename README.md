@@ -14,16 +14,22 @@ MVP da Sprint 4 da Pós Graduação em Engenharia de Software
 🔗 Link do google drive: https://drive.google.com/drive/folders/1bBSueloNniaey8LpJzwfipWTuS1sn9LR?usp=sharing
 
 * ## Pré-processamento
-***Restrições:*** <br><br>
-1 - Valor da quota [VL_QUOTA] > 0 por entender que um fundo com valor de quota negativo, já é um fundo "esgotado" que não deve estar na base de análise.<br>
-2 - Número de Cotistas [NR_COTST] > 15.000 por avaliar, durante análises dos dados dos datasets, que valores menores afetavam significativamente o comportamento de resgates e captações diárias.<br>
-3 - Valor do Patrimônio Líquido [VL_PATRIM_LIQ] > 1.000.000 por avaliar, durante análises dos dados dos datasets, que valores menores afetavam significativamente o comportamento de resgates e captações diárias.<br>
-4 - Classe do Fundo [CLASSE] = Fundo Multimercado, por ser um fundo de investimento de perfil intermediário, não tão conservador quanto um Fundo de Renda Fixa, nem tão arrojado quanto um Fundo de Ações. Todos os demais fundos constantes nos datasets (Fundo de Curto Prazo, Fundo Cambial, Fundo Referenciado, Fundo da Dívida Externa e FMP-FGTS), são fundos de classes muito específicas.<br><br>
-***Feature Selection and Engineering:*** <br><br>
-ATRIBUTO ALVO:: RET_VL_QUOTA = VL_QUOTA (M+1) - VL_QUOTA (M). Se RET_VL_QUOTA > 0, SUGESTÃO = 1, investimento VIÁVEL, caso contrário SUGESTÃO = 0, INVIÁVEL. O atributo alvo será o campo [SUGESTÃO].<br>
-FEATURES:: Foram pré-selecionadas 7 (sete) colunas das 10 (dez) originais.<br><br>
+***Restrições:***
+1 - Valor da quota [VL_QUOTA] > 0 por entender que um fundo com valor de quota negativo, já é um fundo "esgotado" que não deve estar na base de análise.
+
+2 - Número de Cotistas [NR_COTST] > 15.000 por avaliar, durante análises dos dados dos datasets, que valores menores afetavam significativamente o comportamento de resgates e captações diárias.
+
+3 - Valor do Patrimônio Líquido [VL_PATRIM_LIQ] > 1.000.000 por avaliar, durante análises dos dados dos datasets, que valores menores afetavam significativamente o comportamento de resgates e captações diárias.
+
+4 - Classe do Fundo [CLASSE] = Fundo Multimercado, por ser um fundo de investimento de perfil intermediário, não tão conservador quanto um Fundo de Renda Fixa, nem tão arrojado quanto um Fundo de Ações. Todos os demais fundos constantes nos datasets (Fundo de Curto Prazo, Fundo Cambial, Fundo Referenciado, Fundo da Dívida Externa e FMP-FGTS), são fundos de classes muito específicas.
+
+***Feature Selection and Engineering:***
+ATRIBUTO ALVO:: RET_VL_QUOTA = VL_QUOTA (M+1) - VL_QUOTA (M). Se RET_VL_QUOTA > 0, SUGESTÃO = 1, investimento VIÁVEL, caso contrário SUGESTÃO = 0, INVIÁVEL. O atributo alvo será o campo [SUGESTÃO].
+
+FEATURES:: Foram pré-selecionadas 7 (sete) colunas das 10 (dez) originais.
 
 ***OBS*** - Foram utilizados os meses 9/23 e 10/23 para geração das bases de treino e teste. Foram utilizados os meses 7/23 e 8/23 para geração da base de simulação.
+
 * ## Modelagem e Inferência
 * ## Pós-processamento
 * ## Apresentação de Resultados
