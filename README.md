@@ -5,7 +5,7 @@ MVP da Sprint 4 da Pós Graduação em Engenharia de Software
 * ## Definição do Problema
   Estabelecer uma forma simples de avaliação de viabilidade de um fundo de investimentos, com um nível razoável de assertividade, considerando um número mínimo de variáveis. Entendendo como viabilidade, o aumento do valor da quota, em um período de carência de 30 (trinta) dias corridos.
 
-  <b><font color='red'>***Note que aqui não se fala de rendimento, mas sim se a variação da quota foi positiva no período.***</font></b>
+  ***Note que aqui não se fala de rendimento, mas sim se a variação da quota foi positiva no período.***
 * ## Coleta e Análise de Dados
 * ## Pré-processamento
 * ## Modelagem e Inferência
