@@ -12,7 +12,6 @@ from flask_openapi3 import OpenAPI, Info, Tag
 from flask_cors import CORS
 from flask import redirect, request, Flask, jsonify, make_response
 
-from schemas import AvalFIMultSchema
 from urllib.parse import unquote
 
 from logger import setup_logger
@@ -102,7 +101,9 @@ def avalfimult():
             # mesage = "Erro: Sem identificação da origem da chamada!"
             # print(mesage)
             # return mesage
-
+        if patliq < 1000000:
+            mesage = "Erro: patliq deve ser >= 1M !!!"
+            return mesage
         path_pkl = "../modelos_ML/"
         modelo_pkl = "Pkl_Model_FIMulti_CART.pkl"
         scaler_pkl = "Pkl_Scaler_Standard.pkl"

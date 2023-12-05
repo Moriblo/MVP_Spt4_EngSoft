@@ -78,7 +78,7 @@ const newItem = async() => {
       // Msg_2
       atualizarSemaforo ('off', 'on', 'off');
       setTimeout(() => {
-        alert("Erro: Patrimônio>=1.000.000!");
+        alert("Erro: Patrimônio deve ser >= 1.000.000!");
         atualizarSemaforo ('off', 'off', 'off');
         letreiro()
       }, 100);
@@ -123,12 +123,14 @@ avalfimult = async (inputResgate, inputCapta, inputPatLiq, inputPatTotal) => {
         R = "off";
         Y = "off";
         G = "on";
-        letreiro("Tá liberado!!!")
+        newText ="Com acurácia de ~70% e precisão de ~80%, este fundo É VIÁVEL."
+        letreiro(newText)
       } else if (data === "0") {
         R = "on";
         Y = "off";
         G = "off";
-        letreiro("Deu ruim!!!")
+        newText = "Com acurácia de ~70% e precisão de ~10%, este fundo É INVIÁVEL"
+        letreiro(newText)
       }
       else {
         R = "off";
@@ -145,9 +147,9 @@ avalfimult = async (inputResgate, inputCapta, inputPatLiq, inputPatTotal) => {
   }
 }
 
-/* SEMÁFORO
+/*  LETREIRO
   --------------------------------------------------------------------------------------
-  Função para mostrar o resultado da avaliação dos dados do fundo 
+  Função para emitir informações ao usuário 
   --------------------------------------------------------------------------------------
 */
 function letreiro(newText) {
