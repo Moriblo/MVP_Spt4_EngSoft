@@ -15,6 +15,7 @@ MVP da Sprint 4 da Pós Graduação em Engenharia de Software
 
 * ## Pré-processamento
   ***Restrições:***
+  
   1 - Valor da quota [VL_QUOTA] > 0 por entender que um fundo com valor de quota negativo, já é um fundo "esgotado" que não deve estar na base de análise.
 
   2 - Número de Cotistas [NR_COTST] > 15.000 por avaliar, durante análises dos dados dos datasets, que valores menores afetavam significativamente o comportamento de resgates e captações diárias.
