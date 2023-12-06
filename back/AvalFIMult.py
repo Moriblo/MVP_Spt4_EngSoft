@@ -17,6 +17,8 @@ from urllib.parse import unquote
 from logger import setup_logger
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
+from schemas import *
+
 # ===============================================================================
 """ 2 - Inicializa variáveis de Informações gerais de identificação do serviço.
 """
@@ -24,9 +26,9 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 info = Info(title="API AvalFIMult", version="1.0.0")
 app = OpenAPI(__name__, info=info)
 
-home_tag = Tag(name="Documentação", description="Apresentação da documentação via Swagger.")
-obra_tag = Tag(name="Rota em AvalFIMult", description="Avaliação de Viabilidade de Investimento em Fundos Multimercado")
-doc_tag = Tag(name="Rota em AvalFIMult", description="Documentação da API tradutor no github")
+home_tag = Tag(name="Documentação", description="Apresentação da documentação.")
+obra_tag = Tag(name="Rota em AvalFIMult", description="Avaliação de Viabilidade de Investimento em Fundos Multimercado.")
+doc_tag = Tag(name="Rota em AvalFIMult", description="Documentação da API.")
 
 # ==============================================================================
 """ 3 - Inicializa "service_name" para fins de geração de arquivo de log.
@@ -70,17 +72,17 @@ def home():
 def doc():
     """Redireciona para documentação no github.
     """
-    return redirect('https://github.com/Moriblo/PUC_EngSoft_MVP4')
-
+    return redirect('https://github.com/Moriblo/PUC_EngSoft_MVP4/blob/main/README.md')
 # ==============================================================================++
 """ 6 - Rota "/avalfimult" para tratar o fetch de `GET`.
 """
 # ==============================================================================++
-@app.get('/avalfimult', tags=[obra_tag])
+@app.get('/avalfimult', tags=[obra_tag], responses={"200": FIMultiSaidaSchema, "404": ErrorSchema})
 
-def avalfimult():
+def avalfimult(query: FIMultiEntradaSchema):
     """Avaliação de Viabilidade de Investimento em Fundos Multimercado.
     """
+
     resgate = request.args.get('resgate')
     capta = request.args.get('capta')
     patliq = request.args.get('patliq')
