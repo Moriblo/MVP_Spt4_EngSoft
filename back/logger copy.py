@@ -57,13 +57,13 @@ def setup_logger(service_name):
         "loggers": {
             f"{service_name}.error": {
                 "handlers": ["console", "error_file"],  #, email],
-                "level": "DEBUG",
+                "level": "INFO",
                 "propagate": False,
             }
         },
         "root": {
             "handlers": ["console", "detailed_file"],
-            "level": "DEBUG",
+            "level": "INFO",
         }
     })
 
