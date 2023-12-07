@@ -1,15 +1,14 @@
 from logging.config import dictConfig
-from logging.handlers import RotatingFileHandler
 import logging
 import os
 
-service_name = "avalfimulti"
-log_path = "log/"
 
-# Verifica se o diretorio para anexar os logs não existe
+log_path = "log/"
+# Verifica se o diretorio para armexanar os logs não existe
 if not os.path.exists(log_path):
-    # Então cria o diretorio
-    os.makedirs(log_path)
+   # então cria o diretorio
+   os.makedirs(log_path)
+
 
 dictConfig({
     "version": 1,
@@ -41,7 +40,7 @@ dictConfig({
         "error_file": {
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "detailed",
-            "filename": f"{log_path}/{service_name}.error.log",
+            "filename": "log/gunicorn.error.log",
             "maxBytes": 10000,
             "backupCount": 10,
             "delay": "True",
@@ -49,23 +48,24 @@ dictConfig({
         "detailed_file": {
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "detailed",
-            "filename": f"{log_path}/{service_name}.detailed.log",
+            "filename": "log/gunicorn.detailed.log",
             "maxBytes": 10000,
             "backupCount": 10,
             "delay": "True",
         }
     },
     "loggers": {
-        f"{service_name}.error": {
+        "gunicorn.error": {
             "handlers": ["console", "error_file"],  #, email],
-            "level": "DEBUG",
+            "level": "INFO",
             "propagate": False,
         }
     },
     "root": {
         "handlers": ["console", "detailed_file"],
-        "level": "DEBUG",
+        "level": "INFO",
     }
 })
+
 
 logger = logging.getLogger(__name__)
