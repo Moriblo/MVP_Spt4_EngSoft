@@ -92,6 +92,13 @@ def avalfimult(query: FIMulti_schema.FIMultiEntradaSchema):
             recebidos ou estão vazios ou não são números."
         logger.critical(message)
         return message, 400
+
+    # Verifica se o parâmetro 'entrada' foi fornecido
+    if resgate is None or capta is None or patliq is None or pattotal is None:
+        message = f"Erro: Parâmetros incompletos - resgate: {resgate}, capta: {capta}, \
+            patliq: {patliq}, pattotal: {pattotal}"
+        logger.critical(message)
+        return message
     else:
         # Lê identificação da origem da solicitação de uso desta API
         # origin = request.headers.get('X-Origin')
@@ -105,20 +112,19 @@ def avalfimult(query: FIMulti_schema.FIMultiEntradaSchema):
         pattotal = float(pattotal)
 
         if patliq < 1000000:
-            message = "Erro: patliq deve ser >= 1.000.000 !!!"
+            message = "Erro: patliq deve ser >= 1M !!!"
             logger.error(message)
             return message
-        
         path_pkl = "../modelos_ML/"
         modelo_pkl = "Pkl_Model_FIMulti_CART.pkl"
         scaler_pkl = "Pkl_Scaler_Standard.pkl"
         pathmodel = path_pkl + modelo_pkl
         pathscaler = path_pkl + scaler_pkl
 
-        with open(pathmodel, "rb") as m:
-            model = pickle.load(m) # carrega modelo
+        with open(pathmodel, "rb") as f:
+            model = pickle.load(f)
         with open(pathscaler, "rb") as s:
-            scaler = pickle.load(s) # carrega scaler
+            scaler = pickle.load(s)
 
         # Estabelece o vetor com os dados informados
         x_entrada = [[resgate, capta, patliq, pattotal]]
@@ -127,9 +133,8 @@ def avalfimult(query: FIMulti_schema.FIMultiEntradaSchema):
         # Aplica o modelo para os valores informados
         sugest = model.predict(entrada)
 
-        # Converte o resultado (sugestão) em uma string
+        # Converter o resultado (sugestão) em uma string
         sugest_str = str(sugest[0])
-
         if sugest_str != "0" and sugest_str != "1":
             message = "Erro: Nenhum resultado foi obtido!!!" + sugest_str
             logger.error(message)
@@ -140,7 +145,7 @@ def avalfimult(query: FIMulti_schema.FIMultiEntradaSchema):
             resultado = "Viável"
         message = "Resultado: " + resultado
 
-        # Retornar com o resultado (Viável ou Inviável) e o cenário adotado
+        # Retornar com SUGESTÃO (Viável ou Inviável) para a aplicação no fundo de investimento
         logger.info("Modelo utilizado: " + str(model))
         logger.info("Formato utilizado: " + str(scaler))
         logger.info("Valores recebidos: " + "resgate:" + str(resgate) + "captação:" + str(capta) + \
