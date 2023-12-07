@@ -1,14 +1,20 @@
-from logging.config import dictConfig
 import logging
 import os
+from logging.config import dictConfig
+from logging.handlers import RotatingFileHandler
+from datetime import datetime
 
-def setup_logger(service_name):
+def configure_logger(service_name, log_path):
 
-    log_path = "log/"
-    # Verifica se o diretorio para anexar os logs não existe
     if not os.path.exists(log_path):
-        # Então cria o diretorio
         os.makedirs(log_path)
+
+    if service_name =="" or service_name is None or log_path =="" or log_path is None:
+        service_name = __name__
+        log_path = "log/"
+    
+    hora_formatada = datetime.now().strftime("%H:%M:%S")[:8].replace(":", "")
+    service_name = service_name + hora_formatada
 
     dictConfig({
         "version": 1,
@@ -38,34 +44,34 @@ def setup_logger(service_name):
             #     "credentials": ("username", "password"),
             # },
             "error_file": {
-                "class": "logging.handlers.RotatingFileHandler",
+                "class": "logging.handlers.TimedRotatingFileHandler",
                 "formatter": "detailed",
-                "filename": f"./{service_name}.error.log",
-                "maxBytes": 10000,
-                "backupCount": 10,
-                "delay": "True",
+                "filename": f"{log_path}/{service_name}.error.log",
+                "when": "D", 
+                "interval": 1, 
+                "backupCount": 5
             },
             "detailed_file": {
-                "class": "logging.handlers.RotatingFileHandler",
+                "class": "logging.handlers.TimedRotatingFileHandler",
                 "formatter": "detailed",
-                "filename": f"./{service_name}.detailed.log",
-                "maxBytes": 10000,
-                "backupCount": 10,
-                "delay": "True",
+                "filename": f"{log_path}/{service_name}.detailed.log",
+                "when": "D", 
+                "interval": 1, 
+                "backupCount": 5
             }
         },
         "loggers": {
             f"{service_name}.error": {
                 "handlers": ["console", "error_file"],  #, email],
-                "level": "INFO",
+                "level": "DEBUG",
                 "propagate": False,
             }
         },
         "root": {
             "handlers": ["console", "detailed_file"],
-            "level": "INFO",
+            "level": "DEBUG",
         }
     })
 
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger(service_name)
     return logger

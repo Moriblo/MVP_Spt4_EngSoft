@@ -7,6 +7,7 @@ import pickle
 import pandas as pd
 import numpy as np
 import sklearn
+import logging
 
 from flask_openapi3 import OpenAPI, Info, Tag
 from flask_cors import CORS
@@ -14,15 +15,17 @@ from flask import redirect, request, Flask, jsonify, make_response
 
 from urllib.parse import unquote
 
-from logger import setup_logger
+from logger import configure_logger
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
-from schemas import *
+from schemas import FIMulti_schema, error
 
 # ===============================================================================
 """ 2 - Inicializa variáveis de Informações gerais de identificação do serviço.
 """
 #  ==============================================================================
+service_name = "avalfimult"
+
 info = Info(title="API AvalFIMult", version="1.0.0")
 app = OpenAPI(__name__, info=info)
 
@@ -31,11 +34,14 @@ obra_tag = Tag(name="Rota em AvalFIMult", description="Avaliação de Viabilidad
 doc_tag = Tag(name="Rota em AvalFIMult", description="Documentação da API.")
 
 # ==============================================================================
-""" 3 - Inicializa "service_name" para fins de geração de arquivo de log.
-"""
+""" 3 - Chama setup_logger e configure_logger, para definir "logger.py".
+    Os logs podem ser de: info, debug, warning, error ou critical
+""" 
 # ==============================================================================
-service_name = "avalfimult"
-logger = setup_logger(service_name)
+log_path = "log/"
+logger = configure_logger(service_name, log_path)
+
+logger.info("API avalia fundo de investimento multimercado")
 
 # ==============================================================================
 """ 4 - Configurações de "Cross-Origin Resource Sharing" (CORS).
@@ -54,15 +60,15 @@ logger = setup_logger(service_name)
 CORS(app, supports_credentials=False)
 
 # ================================================================================
-""" 5.1 - DOCUMENTAÇÂO: Rota "/" para geração da documentação via Swagger.
+""" 5.1 - DOCUMENTAÇÂO: Rota "/" para escolha na geração da documentação.
 """
 # ================================================================================
 @app.get('/', tags=[home_tag])
 
 def home():
-    """Redireciona para /openapi/swagger.
+    """Redireciona para /openapi.
     """
-    return redirect('/openapi/swagger')
+    return redirect('/openapi')
 
 # ================================================================================
 """ 5.2 - DOCUMENTAÇÂO: Rota "/doc" para documentação via github.
@@ -77,9 +83,9 @@ def doc():
 """ 6 - Rota "/avalfimult" para tratar o fetch de `GET`.
 """
 # ==============================================================================++
-@app.get('/avalfimult', tags=[obra_tag], responses={"200": FIMultiSaidaSchema, "404": ErrorSchema})
+@app.get('/avalfimult', tags=[obra_tag], responses={"200": FIMulti_schema.FIMultiSaidaSchema, "404": error.ErrorSchema})
 
-def avalfimult(query: FIMultiEntradaSchema):
+def avalfimult(query: FIMulti_schema.FIMultiEntradaSchema):
     """Avaliação de Viabilidade de Investimento em Fundos Multimercado.
     """
 
@@ -92,6 +98,7 @@ def avalfimult(query: FIMultiEntradaSchema):
         for arg in [resgate, capta, patliq, pattotal]):
         message = "Os argumentos 'resgate', 'capta', 'patliq' e 'pattotal' \
             recebidos ou estão vazios ou não são números."
+        logger.critical(message)
         return message, 400
 
     # Lê identificação da origem da solicitação de uso desta API
@@ -101,6 +108,7 @@ def avalfimult(query: FIMultiEntradaSchema):
     if resgate is None or capta is None or patliq is None or pattotal is None:
         message = f"Erro: Parâmetros incompletos - resgate: {resgate}, capta: {capta}, \
             patliq: {patliq}, pattotal: {pattotal}"
+        logger.critical(message)
         return message
     else:
         # if not origin:
@@ -115,6 +123,7 @@ def avalfimult(query: FIMultiEntradaSchema):
 
         if patliq < 1000000:
             message = "Erro: patliq deve ser >= 1M !!!"
+            logger.error(message)
             return message
         path_pkl = "../modelos_ML/"
         modelo_pkl = "Pkl_Model_FIMulti_CART.pkl"
@@ -138,20 +147,22 @@ def avalfimult(query: FIMultiEntradaSchema):
         sugest_str = str(sugest[0])
         if sugest_str != "0" and sugest_str != "1":
             message = "Erro: Nenhum resultado foi obtido!!!" + sugest_str
+            logger.error(message)
             return message
         elif sugest_str == "0":
             resultado = "Inviável"
         elif sugest_str == "1":
             resultado = "Viável"
-        message = "O resultado obtido foi: " + resultado
+        message = "Resultado: " + resultado
 
         # Retornar com SUGESTÃO (Viável ou Inviável) para a aplicação no fundo de investimento
-        print("Modelo utilizado: " + str(model))
-        print("Formatação utilizada: " + str(scaler))
-        print("Valores recebidos: ", "resgate:", resgate, "captação:", capta, \
-            "Patrim. Liq.:", patliq, "Patrim. Total:", pattotal)
-        print("Valores convertidos: ", entrada)
-        print(message + " " + sugest_str)
+        logger.info("Modelo utilizado: " + str(model))
+        logger.info("Formato utilizado: " + str(scaler))
+        logger.info("Valores recebidos: " + "resgate:" + str(resgate) + "captação:" + str(capta) + \
+            "Patrim. Liq.:" + str(patliq) + "Patrim. Total:" + str(pattotal))
+        logger.info("Valores convertidos: " + str(entrada))
+        logger.info(message + " " + sugest_str)
+
         return sugest_str
 
 
