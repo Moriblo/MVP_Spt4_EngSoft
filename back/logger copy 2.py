@@ -12,8 +12,9 @@ def configure_logger(service_name, log_path):
     if service_name =="" or service_name is None or log_path =="" or log_path is None:
         service_name = __name__
         log_path = "log/"
-
-    service_name = service_name + datetime.now().strftime("%Y%m%d")
+    
+    hora_formatada = datetime.now().strftime("%H:%M:%S")[:8].replace(":", "")
+    service_name = service_name + hora_formatada
 
     dictConfig({
         "version": 1,

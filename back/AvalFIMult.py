@@ -15,7 +15,7 @@ from flask import redirect, request, Flask, jsonify, make_response
 
 from urllib.parse import unquote
 
-from logger import logger
+from logger import configure_logger
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 from schemas import FIMulti_schema, error
@@ -34,10 +34,12 @@ obra_tag = Tag(name="Rota em AvalFIMult", description="Avaliação de Viabilidad
 doc_tag = Tag(name="Rota em AvalFIMult", description="Documentação da API.")
 
 # ==============================================================================
-""" 3 - Inicializa "service_name" para fins de geração de arquivo de log.
+""" 3 - Chama setup_logger e configure_logger, para definir "logger.py".
     Os logs podem ser de: info, debug, warning, error ou critical
 """ 
 # ==============================================================================
+log_path = "log/"
+logger = configure_logger(service_name, log_path)
 
 logger.info("API avalia fundo de investimento multimercado")
 

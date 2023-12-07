@@ -1,14 +1,16 @@
 from logging.config import dictConfig
+from logging.handlers import RotatingFileHandler
 import logging
 import os
 
 
+service_name = __name__
 log_path = "log/"
-# Verifica se o diretorio para armexanar os logs não existe
-if not os.path.exists(log_path):
-   # então cria o diretorio
-   os.makedirs(log_path)
 
+# Verifica se o diretorio para anexar os logs não existe
+if not os.path.exists(log_path):
+    # Então cria o diretorio
+    os.makedirs(log_path)
 
 dictConfig({
     "version": 1,
@@ -38,34 +40,33 @@ dictConfig({
         #     "credentials": ("username", "password"),
         # },
         "error_file": {
-            "class": "logging.handlers.RotatingFileHandler",
+            "class": "logging.handlers.TimedRotatingFileHandler",
             "formatter": "detailed",
-            "filename": "log/gunicorn.error.log",
-            "maxBytes": 10000,
-            "backupCount": 10,
-            "delay": "True",
+            "filename": f"{log_path}/{service_name}.error.log",
+            "when": "D", 
+            "interval": 1, 
+            "backupCount": 5
         },
         "detailed_file": {
-            "class": "logging.handlers.RotatingFileHandler",
+            "class": "logging.handlers.TimedRotatingFileHandler",
             "formatter": "detailed",
-            "filename": "log/gunicorn.detailed.log",
-            "maxBytes": 10000,
-            "backupCount": 10,
-            "delay": "True",
+            "filename": f"{log_path}/{service_name}.detailed.log",
+            "when": "D", 
+            "interval": 1, 
+            "backupCount": 5
         }
     },
     "loggers": {
-        "gunicorn.error": {
+        f"{service_name}.error": {
             "handlers": ["console", "error_file"],  #, email],
-            "level": "INFO",
+            "level": "DEBUG",
             "propagate": False,
         }
     },
     "root": {
         "handlers": ["console", "detailed_file"],
-        "level": "INFO",
+        "level": "DEBUG",
     }
 })
-
 
 logger = logging.getLogger(__name__)
