@@ -1,1 +1,1 @@
-# ***Contém o arquivo IPYNB do notebook do colabB***
+# ***Contém o arquivo IPYNB do notebook do colab***

@@ -5,7 +5,7 @@ Fonte: Engenharia de Sistemas de Software Inteligentes,
 Disciplina Qualidade de Software, Segurança e Sistemas Inteligentes
 
 * ### Definição do Problema
-  Estabelecer uma forma simples de avaliação de viabilidade de um fundo de investimentos, com um nível razoável de assertividade, considerando um número mínimo de variáveis. Entendendo como viabilidade, o aumento do valor da quota, em um período de carência de 30 (trinta) dias corridos.
+  Estabelecer uma forma simples de avaliação de viabilidade de um fundo de investimentos, com um nível razoável de acurácia, considerando um número mínimo de variáveis. Entendendo como viabilidade, o aumento do valor da quota, em um período de carência de 30 (trinta) dias corridos.
 
   :warning: ***Note que aqui não se fala de rendimento, mas sim se a variação da quota foi positiva no período.***
 
