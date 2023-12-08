@@ -43,7 +43,7 @@ def test_modelo_cart():
         modelo_cart, scaler_cart)
 
     """
-    Varificando a coleta dos dados, consistência dos atributos, do modelo carregado, 
+    Verificando a coleta dos dados, consistência dos atributos, do modelo carregado, 
     dos parâmetros do modelo, e por fim das expectativas de acurácia e precisão para o modelo.
     """
     assert not dataset.empty, "O DataFrame está vazio"
