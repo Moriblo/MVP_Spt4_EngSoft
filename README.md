@@ -1,5 +1,4 @@
 # ***PUC - MVP da Sprint 4 da Pós Graduação em Engenharia de Software***
-# ☑️[Check de Atendimento aos Requisitos](https://github.com/users/Moriblo/projects/7)
 # ▶Apresentação - Esquema de um Projeto de Ciência de Dados
 ![Esquema básico de um Projeto de Ciência de Dados](https://github.com/Moriblo/PUC_EngSoft_MVP4/blob/main/images/Esquema%20B%C3%A1sico%20de%20um%20Projeto%20de%20Ci%C3%AAncia%20de%20Dados.png)
 Fonte: Engenharia de Sistemas de Software Inteligentes, 
@@ -46,3 +45,5 @@ Disciplina Qualidade de Software, Segurança e Sistemas Inteligentes
   
 * ### Implantação do Modelo e Geração de Valor
   Exporta para 'My Drive' no Google Drive,  um arquivo .pkl com o modelo utilizado e um outro arquivo, que tem o scaler utilizado.
+  
+# ☑️[Check de Atendimento aos Requisitos](https://github.com/users/Moriblo/projects/7)
