@@ -130,7 +130,7 @@ avalfimult = async (inputResgate, inputCapta, inputPatLiq, inputPatTotal) => {
         R = "on";
         Y = "off";
         G = "off";
-        newText = "Com acurácia de ~65% e precisão de ~20%, este fundo É INVIÁVEL"
+        newText = "Com acurácia de ~65% e precisão de ~10%, este fundo É INVIÁVEL"
       }
       else {
         R = "off";
