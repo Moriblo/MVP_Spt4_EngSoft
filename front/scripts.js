@@ -46,7 +46,8 @@ const newItem = async() => {
       setTimeout(() => {
         alert("Erro: Todos os campos devem estar preenchidos!");
         atualizarSemaforo ('off', 'off', 'off');
-        letreiro()
+        newText = "Esta aplicação tem o objetivo de prestar uma orientação mínima à avaliação de viabilidade de Fundos de Investimentos Multimercado..."
+        letreiro(newText)
       }, 100);
       return;
     }
@@ -80,7 +81,8 @@ const newItem = async() => {
       setTimeout(() => {
         alert("Erro: Patrimônio deve ser >= 1.000.000!");
         atualizarSemaforo ('off', 'off', 'off');
-        letreiro()
+        newText = "Esta aplicação tem o objetivo de prestar uma orientação mínima à avaliação de viabilidade de Fundos de Investimentos Multimercado..."
+        letreiro(newText)
       }, 100);
       return; // Sai da função
     }
@@ -152,10 +154,32 @@ avalfimult = async (inputResgate, inputCapta, inputPatLiq, inputPatTotal) => {
   Função para emitir informações ao usuário 
   --------------------------------------------------------------------------------------
 */
-function letreiro(newText) {
+
+/*function letreiro(newText) {
   // Seleciona o elemento marquee
   var marquee = document.querySelector('.letreiro marquee');
 
   // Altera o texto dentro do marquee
   marquee.textContent = newText;
+}
+*/
+
+function letreiro(newText) {
+  // Seleciona o elemento .letreiro
+  var letreiro = document.querySelector('.letreiro');
+
+  // Remove o marquee antigo, se existir
+  var oldMarquee = letreiro.querySelector('marquee');
+  if (oldMarquee) {
+      letreiro.removeChild(oldMarquee);
+  }
+
+  // Cria um novo marquee
+  var newMarquee = document.createElement('marquee');
+  newMarquee.setAttribute('behavior', 'scroll');
+  newMarquee.setAttribute('direction', 'left');
+  newMarquee.textContent = newText;
+
+  // Adiciona o novo marquee ao .letreiro
+  letreiro.appendChild(newMarquee);
 }
