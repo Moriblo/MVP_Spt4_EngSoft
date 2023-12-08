@@ -1,1 +1,1 @@
-# ***CONTÉM OS ARQUIVOS DO MODELO E DO SCALER***
+# ***Contém os arquivos do MODELO e do SCALER***
